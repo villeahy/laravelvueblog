@@ -7,7 +7,7 @@ PASSPORT_CLIENT_ID=3,
 PASSPORT_CLIENT_SECRET=
 in .env file
 for auth i use laravel passport password type https://laravel.com/docs/5.7/passport#creating-a-password-grant-client
-so after running php aritsan migrate run php artisan passport:client --password to get client id and secret
+so after running php aritsan migrate run php artisan passport:client --password to get client id and secret you can also run php artisan db:seed to generate 10 random post
 Login end point for this env variable is "vhost-name"/oauth/token
 then api end point should be
 
