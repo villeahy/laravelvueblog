@@ -1,13 +1,11 @@
 <template lang="html">
-  <main>
-    <div class="post-container">
-      <div class="post" v-for="post in posts" :key="post.id">
-        <h3 class="post-title">{{ post.title }}</h3>
-        <p class="post-paragraph">{{ post.body }}</p>
-        <p class="post-date">{{ post.posted.date.slice(0, 16) }}</p>
-      </div>
+  <div class="post-container">
+    <div class="post" v-for="post in posts" v-bind:key="post.id">
+      <h3 class="post-title">{{ post.title }}</h3>
+      <p class="post-paragraph">{{ post.body }}</p>
+      <p class="post-date">{{ post.posted.date.slice(0, 16) }}</p>
     </div>
-  </main>
+  </div>
 </template>
 
 <script>
@@ -15,33 +13,50 @@ export default {
   data() {
     return {
       posts: [],
-      post: {
-        id: "",
-        title: "",
-        body: "",
-        date: ""
-      },
-      article_id: "",
-      pagination: {},
-      edit: false
+      pagination: {}
     };
   },
+  props: ["token"],
   mounted() {
     this.fetchPosts();
   },
   methods: {
     fetchPosts() {
-      fetch("api/posts")
-        .then(res => res.json())
-        .then(({ data }) => {
-          this.posts = data;
+      fetch("api/posts", {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${this.token.access_token}`
+        }
+      })
+        .then(async res => {
+          if (res.ok) {
+            const { data } = await res.json();
+            this.posts = data;
+          } else {
+            fetch(`api/logout`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                Authorization: `Bearer ${this.token.access_token}`
+              }
+            })
+              .then(() => {
+                this.$emit("reset-token");
+              })
+              .catch(err => {
+                console.error(err);
+              });
+          }
+        })
+        .catch(err => {
+          console.error(err);
         });
     }
   }
 };
 </script>
 
-<style lang="css">
+<style scoped lang="css">
 .post-container {
   padding: 3rem 2rem;
   display: flex;

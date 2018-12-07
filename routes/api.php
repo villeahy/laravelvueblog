@@ -13,20 +13,20 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/login', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/user', function () {
-    //
-})->middleware('auth:api');
+Route::post('login', 'AuthController@login');
+Route::post('register', 'AuthController@register');
+Route::middleware('auth:api')->post('logout', 'AuthController@logout');
 
-Route::get('posts', 'PostController@index');
+Route::middleware('auth:api')->get('posts', 'PostController@index');
 
-Route::get('post/{id}', 'PostController@show');
+Route::middleware('auth:api')->get('post/{id}', 'PostController@show');
 
-Route::post('post', 'PostController@store');
+Route::middleware('auth:api')->post('post', 'PostController@store');
 
-Route::put('post', 'PostController@store');
+Route::middleware('auth:api')->put('post', 'PostController@store');
 
-Route::delete('post', 'PostController@destroy');
+Route::middleware('auth:api')->delete('post', 'PostController@destroy');

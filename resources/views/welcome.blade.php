@@ -8,7 +8,7 @@
         window.Laravel = { csrf_token: `{{ csrf_token() }}`}
         </script>
 
-        <title>Ultimate Blog Warrior</title>
+        <title>Ultimate Forum Warrior</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
