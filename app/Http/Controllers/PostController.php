@@ -63,6 +63,13 @@ class PostController extends Controller
         return new PostResource($post);
     }
 
+    public function filter($word)
+    {
+        $post = Post;
+
+        return new PostResource($post);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

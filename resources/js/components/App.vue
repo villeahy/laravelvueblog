@@ -1,11 +1,13 @@
 <template lang="html">
   <div class="container">
-    <nav-bar v-bind:token="token" v-on:reset-token="token = ''" />
+    <nav-bar v-bind:token="token" v-on:reset-token="updateToken('')" />
     <main>
-      <posts v-if="token" v-bind:token="token" v-on:reset-token="token = ''" />
-      <div class="login-register" v-else>
-        <login-vue v-on:new-token="token = $event" /><register-vue />
-      </div>
+      <posts-vue
+        v-if="token"
+        :token="token"
+        v-on:reset-token="updateToken('')"
+      />
+      <login-register-vue v-on:new-token="updateToken($event)" v-else />
     </main>
   </div>
 </template>
@@ -13,21 +15,29 @@
 <script>
 import Navbar from "./Navbar.vue";
 import Posts from "./Posts.vue";
-import Login from "./Login.vue";
-import Register from "./Register.vue";
+import LoginRegister from "./LoginRegister.vue";
+import { logout } from "../utils/fetch.js";
 
 export default {
   name: "vue-app",
   components: {
     "nav-bar": Navbar,
-    posts: Posts,
-    "login-vue": Login,
-    "register-vue": Register
+    "posts-vue": Posts,
+    "login-register-vue": LoginRegister
   },
   data() {
     return {
       token: ``
     };
+  },
+  methods: {
+    updateToken(newtoken) {
+      if (!newtoken)
+        logout({ token: this.token.access_token }).then(result => {
+          console.log(result);
+        });
+      this.token = newtoken;
+    }
   }
 };
 </script>
@@ -52,26 +62,5 @@ body {
   color: #555;
   font-size: 1.6rem;
   background-color: #eee;
-}
-.login-register {
-  display: flex;
-  justify-content: space-around;
-  align-items: stretch;
-  flex-wrap: wrap;
-}
-
-.login-register > * {
-  flex: 0 0 40%;
-}
-.login-register > *:not(:last-child){
-  border-right: 1px solid #ddd;
-}
-@media only screen and (max-width: 800px) {
-  .login-register > * {
-    flex: 0 0 80%;
-  }
-  .login-register > *:not(:last-child){
-    border-right: none;
-  }
 }
 </style>

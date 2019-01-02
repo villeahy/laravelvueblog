@@ -1,7 +1,7 @@
 <template lang="html">
   <nav class="navbar">
     <h1>Ultimate Forum Warrior</h1>
-    <button class="navbar_btn" @click="logout">Log out</button>
+    <button v-if="token" class="navbar_btn" @click="logout">Log out</button>
   </nav>
 </template>
 
@@ -11,19 +11,7 @@ export default {
   props: ["token"],
   methods: {
     logout: function() {
-      fetch(`api/logout`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${this.token.access_token}`
-        }
-      })
-        .then(() => {
-          this.$emit("reset-token");
-        })
-        .catch(err => {
-          console.error(err);
-        });
+      this.$emit("reset-token");
     }
   }
 };
@@ -42,7 +30,7 @@ h1 {
   font-size: 4rem;
   text-transform: uppercase;
   font-weight: 300;
-  text-shadow: 0 .4rem 2rem rgba(0,0,0,.3);
+  text-shadow: .7rem .7rem 1.5rem rgba(0,0,0,.4);
 }
 .navbar_btn{
   font-size: 2rem;

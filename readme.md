@@ -21,7 +21,7 @@ then api end point should be
 
 /api/post POST to make post / PUT to edit post
 
-##Current status
+## Current status
 
 Backend works pretty well now but i still need to add a websocket.
 
