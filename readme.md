@@ -23,6 +23,5 @@ then api end point should be
 
 ## Current status
 
-Backend works pretty well now but i still need to add a websocket.
-
-Front-end have some of basic functionalities like login and register but they are not completely done and need to still add a post filtering functionality and creating a post and stuff
+websockets works without authentication
+fetch is made with highorder function
