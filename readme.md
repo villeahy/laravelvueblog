@@ -25,11 +25,3 @@ then api end point should be
 
 websockets works still need authentication for them.
 fetch is made with highorder function.
-
-## abobe xd link
-
-https://xd.adobe.com/view/df6fc295-b30a-4658-6cd2-c6791aa4cc02-a95e/
-
-## database
-
-didnt feel need to add it because i have php artisan db:seed command that generates 10 random posts
